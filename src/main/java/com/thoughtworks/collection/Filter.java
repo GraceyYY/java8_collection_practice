@@ -1,31 +1,38 @@
 package com.thoughtworks.collection;
 
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Map;
 
 public class Filter {
 
-    List<Integer>  array;
+    List<Integer> array;
 
     public Filter(List<Integer> array) {
-     this.array = array;
+        this.array = array;
     }
 
     public List<Integer> filterEven() {
-        throw new NotImplementedException();
+        List<Integer> result = new ArrayList<>(this.array);
+        result.removeIf((n) -> n % 2 == 1);
+        return result;
     }
 
     public List<Integer> filterMultipleOfThree() {
-        throw new NotImplementedException();
+        List<Integer> result = new ArrayList<>(this.array);
+        result.removeIf((n) -> n % 3 != 0);
+        return result;
     }
 
     public List<Integer> getCommonElements(List<Integer> firstList, List<Integer> secondList) {
-        throw new NotImplementedException();
+        List<Integer> first = new ArrayList<>(firstList);
+        first.retainAll(secondList);
+        return first;
     }
 
     public List<Integer> getDifferentElements() {
-        throw new NotImplementedException();
+        LinkedHashSet<Integer> tempSet = new LinkedHashSet<>(new ArrayList<>(this.array));
+        List<Integer> result = new ArrayList<>(tempSet);
+        return result;
     }
 }
