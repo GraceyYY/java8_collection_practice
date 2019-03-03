@@ -121,15 +121,14 @@ public class Add {
     }
 
     public List<Integer> getUnrepeatedFromEvenIndex(List<Integer> arrayList) {
-        List<Integer> repeat = new ArrayList<>();
+        List<Integer> even = new ArrayList<>();
         for (Integer n : arrayList) {
-            if (arrayList.indexOf(n) != arrayList.lastIndexOf(n)) {
-                repeat.add(n);
+            if (n % 2 == 0 && (arrayList.indexOf(n) == arrayList.lastIndexOf(n))) {
+                even.add(n);
             }
         }
-        arrayList.removeAll(repeat);
 
-        return arrayList;
+        return even;
     }
 
     public List<Integer> sortByEvenAndOdd(List<Integer> arrayList) {
