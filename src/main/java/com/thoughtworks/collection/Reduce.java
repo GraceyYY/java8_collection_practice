@@ -5,7 +5,7 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import java.util.Comparator;
 import java.util.List;
 
-public class Reduce implements SingleLink<Integer> {
+public class Reduce {
 
     List<Integer> arrayList;
 
@@ -77,17 +77,19 @@ public class Reduce implements SingleLink<Integer> {
 
     //实现接口SingleLink，然后再此函数内使用
     public Double getMedianInLinkList(SingleLink singleLink) {
-        int index = this.arrayList.size() / 2;
-        double median = 0;
-//        this.arrayList.sort(Comparator.naturalOrder());
-        if (this.arrayList.size() % 2 == 1) {
-            median = this.arrayList.get(index);
-        }else{
-            median = (this.arrayList.get(index) + this.arrayList.get(index - 1)) / 2.0;
+        SingleLink<Integer> list = new SingleLinkList();
+        for (Integer n : this.arrayList) {
+            singleLink.addTailPointer(n);
+            list.addTailPointer(n);
         }
-
+        double median;
+        int index = list.size() / 2;
+        if (list.size() % 2 == 1) {
+            median = list.getNode(index);
+        } else {
+            median = (list.getNode(index - 1) + list.getNode(index))/2.0;
+        }
         return median;
-
     }
 
     public int getLastOdd() {
@@ -109,58 +111,4 @@ public class Reduce implements SingleLink<Integer> {
 
     }
 
-    @Override
-    public Integer getHeaderData() {
-        return this.arrayList.get(0);
-    }
-
-    @Override
-    public Integer getTailData() {
-        return this.arrayList.get(this.arrayList.size() - 1);
-    }
-
-    @Override
-    public int size() {
-        return this.arrayList.size();
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return this.arrayList.isEmpty();
-    }
-
-    @Override
-    public boolean deleteFirst() {
-        if (this.arrayList.isEmpty()) {
-            return false;
-        } else {
-            this.arrayList.remove(0);
-            return true;
-        }
-    }
-
-    @Override
-    public boolean deleteLast() {
-        if (this.arrayList.isEmpty()) {
-            return false;
-        } else {
-            this.arrayList.remove(this.arrayList.size() - 1);
-            return true;
-        }
-    }
-
-    @Override
-    public void addHeadPointer(Integer item) {
-        this.arrayList.add(0, item);
-    }
-
-    @Override
-    public void addTailPointer(Integer item) {
-        this.arrayList.add(item);
-    }
-
-    @Override
-    public Integer getNode(int index) {
-        return this.arrayList.get(index - 1);
-    }
 }
