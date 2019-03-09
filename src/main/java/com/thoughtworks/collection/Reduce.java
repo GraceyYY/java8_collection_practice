@@ -1,9 +1,8 @@
 package com.thoughtworks.collection;
 
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-
-import java.util.Comparator;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Reduce {
 
@@ -14,26 +13,19 @@ public class Reduce {
     }
 
     public int getMaximum() {
-        arrayList.sort(Comparator.reverseOrder());
-        return arrayList.get(0);
+        return this.arrayList.stream().max(Integer::compareTo).get();
     }
 
     public double getMinimum() {
-        arrayList.sort(Comparator.naturalOrder());
-        return arrayList.get(0);
+        return this.arrayList.stream().min(Integer::compareTo).get();
     }
 
     public double getAverage() {
-        double sum = 0;
-        for (Integer n : this.arrayList) {
-            sum += n;
-        }
-        double average = sum / this.arrayList.size();
-        return average;
+        return this.arrayList.stream().collect(Collectors.averagingDouble(Integer::doubleValue));
     }
 
     public double getOrderedMedian() {
-        this.arrayList.sort(Comparator.naturalOrder());
+        this.arrayList.sort(Integer::compareTo);
         int index = this.arrayList.size() / 2;
         double median;
         if (this.arrayList.size() % 2 == 1) {
@@ -45,12 +37,7 @@ public class Reduce {
     }
 
     public int getFirstEven() {
-        for (int i = 0; i < this.arrayList.size(); i++) {
-            if (this.arrayList.get(i) % 2 == 0) {
-                return this.arrayList.get(i);
-            }
-        }
-        return -1;
+        return this.arrayList.stream().filter(element -> element % 2 == 0).findFirst().get();
     }
 
     public int getIndexOfFirstEven() {
@@ -87,18 +74,14 @@ public class Reduce {
         if (list.size() % 2 == 1) {
             median = list.getNode(index);
         } else {
-            median = (list.getNode(index - 1) + list.getNode(index))/2.0;
+            median = (list.getNode(index - 1) + list.getNode(index)) / 2.0;
         }
         return median;
     }
 
     public int getLastOdd() {
-        for (int i = this.arrayList.size() - 1; i >= 0; i--) {
-            if (this.arrayList.get(i) % 2 == 1) {
-                return this.arrayList.get(i);
-            }
-        }
-        return -1;
+        LinkedList<Integer> temp = new LinkedList<>(this.arrayList.stream().filter(element -> element % 2 == 1).collect(Collectors.toList()));
+        return temp.getLast();
     }
 
     public int getIndexOfLastOdd() {
