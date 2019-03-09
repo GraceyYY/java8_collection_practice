@@ -1,48 +1,35 @@
 package com.thoughtworks.collection;
 
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 public class CollectionOperator {
     public List<Integer> getListByInterval(int left, int right) {
-        List<Integer> result = new ArrayList<>();
+        Stream<Integer> result;
         if (left <= right) {
-            for (int i = left; i <= right; i++) {
-                result.add(i);
-            }
+            result = IntStream.rangeClosed(left, right).boxed();
         } else {
-            for (int i = left; i >= right; i--) {
-                result.add(i);
-            }
+            result = IntStream.rangeClosed(right, left).boxed().sorted(Comparator.reverseOrder());
         }
-        return result;
+        return result.collect(Collectors.toList());
     }
 
     public List<Integer> getEvenListByIntervals(int left, int right) {
-        List<Integer> result = new ArrayList<>();
+        Stream<Integer> result;
         if (left <= right) {
-            for (int i = left; i <= right; i++) {
-                result.add(i);
-            }
+            result = IntStream.rangeClosed(left, right).boxed();
         } else {
-            for (int i = left; i >= right; i--) {
-                result.add(i);
-            }
+            result = IntStream.rangeClosed(right, left).boxed().sorted(Comparator.reverseOrder());
         }
-        result.removeIf((n) -> n % 2 == 1);
-        return result;
+        return result.filter(element -> element % 2 == 0).collect(Collectors.toList());
     }
 
     public List<Integer> popEvenElments(int[] array) {
-        List<Integer> result = new ArrayList<>();
-        for (Integer n : array) {
-            if (n % 2 == 0) {
-                result.add(n);
-            }
-        }
-        return result;
+        return Arrays.stream(array).filter(element -> element % 2 == 0).boxed().collect(Collectors.toList());
     }
 
     public int popLastElment(int[] array) {
@@ -57,8 +44,8 @@ public class CollectionOperator {
     }
 
     public List<Integer> addUncommonElement(Integer[] firstArray, Integer[] secondArray) {
-        List<Integer> first = new ArrayList<>(Arrays.asList(firstArray));
-        List<Integer> second = new ArrayList<>(Arrays.asList(secondArray));
+        List<Integer> first = Arrays.stream(firstArray).collect(Collectors.toList());
+        List<Integer> second = Arrays.stream(secondArray).collect(Collectors.toList());
         second.removeAll(first);
         first.addAll(second);
         return first;
