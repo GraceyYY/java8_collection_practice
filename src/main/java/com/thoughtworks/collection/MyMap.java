@@ -1,9 +1,9 @@
 package com.thoughtworks.collection;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class MyMap {
 
@@ -17,43 +17,30 @@ public class MyMap {
     }
 
     public List<Integer> getTriple() {
-        List<Integer> result = new ArrayList<>(this.array);
-        result.replaceAll((n) -> n * 3);
-        return result;
+        return this.array.stream().map(element -> element * 3).collect(Collectors.toList());
     }
 
     public List<String> mapLetter() {
-        List<String> result = new ArrayList<>();
-        for (Integer n : this.array) {
-            result.add(this.letterList.get(n - 1));
-        }
-        return result;
+        return this.array.stream().map(element -> this.letterList.get(element - 1)).collect(Collectors.toList());
     }
 
     public List<String> mapLetters() {
-        List<String> result = new ArrayList<>();
-        for (Integer n : this.array) {
-            if (n <= 26) {
-                result.add(this.letterList.get(n - 1));
+        return this.array.stream().map(element -> {
+            if (element <= 26) {
+                return this.letterList.get(element - 1);
             } else {
-                int firstLetterIndex = (n - 1) / 26;
-                int secondLetterIndex = n - 26 * firstLetterIndex;
-                String letters = this.letterList.get(firstLetterIndex - 1) + this.letterList.get(secondLetterIndex - 1);
-                result.add(letters);
+                int firstLetterIndex = (element - 1) / 26;
+                int secondLetterIndex = element - 26 * firstLetterIndex;
+                return this.letterList.get(firstLetterIndex - 1) + this.letterList.get(secondLetterIndex - 1);
             }
-        }
-        return result;
+        }).collect(Collectors.toList());
     }
 
     public List<Integer> sortFromBig() {
-        List<Integer> result = new ArrayList<>(this.array);
-        result.sort(Comparator.reverseOrder());
-        return result;
+        return this.array.stream().sorted(Comparator.reverseOrder()).collect(Collectors.toList());
     }
 
     public List<Integer> sortFromSmall() {
-        List<Integer> result = new ArrayList<>(this.array);
-        result.sort(Comparator.naturalOrder());
-        return result;
+        return this.array.stream().sorted().collect(Collectors.toList());
     }
 }
