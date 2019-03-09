@@ -1,9 +1,8 @@
 package com.thoughtworks.collection;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Flaten {
 
@@ -14,20 +13,10 @@ public class Flaten {
     }
 
     public List<Integer> transformToOneDimesional() {
-        List<Integer> result = new ArrayList<>();
-        for (Integer[] arr : this.array) {
-            result.addAll(Arrays.asList(arr));
-        }
-        return result;
+        return Arrays.stream(this.array).flatMap(element -> Arrays.stream(element)).collect(Collectors.toList());
     }
 
     public List<Integer> transformToUnrepeatedOneDimesional() {
-        List<Integer> flaten = new ArrayList<>();
-        for (Integer[] arr : this.array) {
-            flaten.addAll(Arrays.asList(arr));
-        }
-        LinkedHashSet<Integer> tempSet = new LinkedHashSet<>(flaten);
-        List<Integer> result = new ArrayList<>(tempSet);
-        return result;
+        return Arrays.stream(this.array).flatMap(element -> Arrays.stream(element)).distinct().collect(Collectors.toList());
     }
 }
