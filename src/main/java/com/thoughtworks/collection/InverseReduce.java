@@ -1,8 +1,9 @@
 package com.thoughtworks.collection;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class InverseReduce {
 
@@ -16,12 +17,8 @@ public class InverseReduce {
     }
 
     public List<Integer> divideToSmaller(int number) {
-        List<Integer> result = new ArrayList<>();
         int randomNum = this.random.nextInt(3);
-        while ((number - randomNum) > 0) {
-            result.add(number - randomNum);
-            number -= randomNum;
-        }
-        return result;
+        int size = number / randomNum;
+        return Stream.iterate(number - randomNum, n -> n - randomNum).limit(size).collect(Collectors.toList());
     }
 }
