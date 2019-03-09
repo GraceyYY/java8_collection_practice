@@ -1,8 +1,8 @@
 package com.thoughtworks.collection;
 
 import java.util.ArrayList;
-import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Filter {
 
@@ -13,15 +13,12 @@ public class Filter {
     }
 
     public List<Integer> filterEven() {
-        List<Integer> result = new ArrayList<>(this.array);
-        result.removeIf((n) -> n % 2 == 1);
-        return result;
+        return this.array.stream().filter(element -> element % 2 == 0).collect(Collectors.toList());
     }
 
     public List<Integer> filterMultipleOfThree() {
-        List<Integer> result = new ArrayList<>(this.array);
-        result.removeIf((n) -> n % 3 != 0);
-        return result;
+        return this.array.stream().filter(element -> element % 3 == 0).collect(Collectors.toList());
+
     }
 
     public List<Integer> getCommonElements(List<Integer> firstList, List<Integer> secondList) {
@@ -31,8 +28,6 @@ public class Filter {
     }
 
     public List<Integer> getDifferentElements() {
-        LinkedHashSet<Integer> tempSet = new LinkedHashSet<>(new ArrayList<>(this.array));
-        List<Integer> result = new ArrayList<>(tempSet);
-        return result;
+        return this.array.stream().distinct().collect(Collectors.toList());
     }
 }
